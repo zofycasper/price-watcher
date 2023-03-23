@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    font-family: "Montserrat";
+}
+
+img {
+    width: 100%;
+}
+
+nav {
+    width: 100%;
+}
+
+.app-container {
+    width: 500px;
+    height: 500px;
+    background-color: #4c4c4c;
+}
+
+form > input,
+form > button,
+nav > button {
+    background-color: #4c4c4c;
+}
+
+.search-icon {
+    background-color: transparent;
+    color: white;
+}
