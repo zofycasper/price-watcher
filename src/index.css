@@ -11,13 +11,17 @@ img {
 }
 
 nav {
-    width: 100%;
+    width: 500px;
 }
 
 .app-container {
     width: 500px;
     height: 500px;
     background-color: #4c4c4c;
+}
+
+.card-container {
+    height: 100%;
 }
 
 form > input,

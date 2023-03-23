@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Header() {
     return (
-        <nav className="bg-gray-300 flex h-10 justify-between items-center px-5 text-sm shadow-sm">
+        <nav className="bg-gray-300  flex h-10 justify-between items-center px-5 text-sm fixed shadow-sm">
             <div className="font-bold text-xs italic text-gray-700">
                 Price Watcher
             </div>
