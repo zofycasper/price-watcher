@@ -7,32 +7,43 @@ import Card from "./Card";
 export default function App() {
     const [priceData, setPriceData] = useState([]);
     const [watchList, setWatchList] = useState([]);
+    const [isWatchList, setIsWatchList] = useState(false);
 
     useEffect(() => {
-        // setInterval(() => {
-
-        // }, 5000)
         fetch(url)
             .then((res) => res.json())
             .then((data) => {
                 console.log("data fetched!");
                 setPriceData(() => {
                     const newPriceData = data.map((item) => {
-                        return {
-                            symbol: item.symbol,
-                            image: item.image,
-                            current_price: item.current_price,
-                            price_change_percentage_24h:
-                                item.price_change_percentage_24h,
-                            // isFavorite: false,
-                        };
+                        return watchList.includes(item)
+                            ? {
+                                  ...item,
+                                  isFavorite: true,
+                              }
+                            : {
+                                  ...item,
+                                  isFavorite: false,
+                              };
                     });
                     return newPriceData;
                 });
             });
     }, []);
 
-    function handleClick(id) {
+    function toggleWatchList() {
+        setIsWatchList((prev) => !prev);
+
+        // setWatchList(() => {
+        //     return priceData.filter((item) => {
+        //         return item.isFavorite;
+        //     });
+        // });
+
+        console.log("watchlist clicked!");
+    }
+
+    function toggleFavorite(id) {
         setPriceData((prev) => {
             return prev.map((item) => {
                 return item.symbol === id
@@ -43,14 +54,24 @@ export default function App() {
                     : item;
             });
         });
+
+        console.log(id);
     }
 
-    const cardElements = priceData.map((item) => {
+    function cardShown() {
+        return isWatchList
+            ? priceData.filter((item) => {
+                  return item.isFavorite;
+              })
+            : priceData;
+    }
+
+    const cardElements = cardShown().map((item) => {
         return (
             <Card
                 {...item}
                 key={item.symbol}
-                handleClick={handleClick}
+                toggleFavorite={toggleFavorite}
                 id={item.symbol}
             />
         );
@@ -58,7 +79,10 @@ export default function App() {
 
     return (
         <div className="app-container bg-slate-400 flex flex-col items-center ">
-            <Header />
+            <Header
+                toggleWatchList={toggleWatchList}
+                isWatchList={isWatchList}
+            />
             <div className="card-container flex flex-col items-center w-full mt-12 overflow-auto pl-8 pr-10">
                 <CardHeader />
                 {cardElements}

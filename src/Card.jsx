@@ -5,7 +5,7 @@ export default function Card({
     image,
     current_price,
     price_change_percentage_24h,
-    handleClick,
+    toggleFavorite,
     id,
     isFavorite,
 }) {
@@ -26,7 +26,7 @@ export default function Card({
                     src={star}
                     alt="star-icon"
                     className="cursor-pointer w-4 h-4"
-                    onClick={() => handleClick(id)}
+                    onClick={() => toggleFavorite(id)}
                 />
                 <img className="h-5 w-5" src={image} alt="" />
                 <h1 className="uppercase font-bold">{symbol}</h1>

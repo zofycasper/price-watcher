@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Header() {
+export default function Header({ toggleWatchList, isWatchList }) {
     return (
         <nav className="bg-gray-300  flex h-10 justify-between items-center px-5 text-sm fixed shadow-sm">
             <div className="font-bold text-xs italic text-gray-700">
@@ -20,8 +20,11 @@ export default function Header() {
                 </button>
             </form>
 
-            <button className=" text-gray-300 italic px-3 py-1 rounded-xl text-xs font-light">
-                Watch List
+            <button
+                onClick={toggleWatchList}
+                className=" text-gray-300 italic px-3 py-1 rounded-xl text-xs font-light"
+            >
+                {isWatchList ? "Back" : "Watch list"}
             </button>
         </nav>
     );
