@@ -1,22 +1,37 @@
 import React from "react";
 
-export default function Header({ toggleWatchList, isWatchList }) {
+export default function Header({
+    toggleWatchList,
+    isWatchList,
+    handleChange,
+    inputData,
+    handleClose,
+}) {
+    function handleSubmit(event) {
+        event.preventDefault();
+    }
+
     return (
         <nav className="bg-gray-300  flex h-10 justify-between items-center px-5 text-sm fixed shadow-sm">
             <div className="font-bold text-xs italic text-gray-700">
                 Price Watcher
             </div>
-            <form action="GET" className="flex items-center">
+            <form
+                onSubmit={handleSubmit}
+                action="GET"
+                className="flex items-center"
+            >
                 <input
+                    onChange={() => handleChange(event)}
+                    value={inputData}
                     placeholder="search"
-                    className="h-5 border-none rounded-l-md hover:bg-gray-600 placeholder:text-gray-500 px-2  py-1 placeholder:text-xs text-xs text-gray-300"
+                    className="h-6 border-none rounded-l-md hover:bg-gray-600 placeholder:text-gray-500 px-2  py-1 placeholder:text-xs text-xs text-gray-300 focus:outline-none"
                 />
-                <button className="h-5 w-5 p-1 rounded-r-md border-none">
-                    <img
-                        src="./image/search.svg"
-                        alt="search-icon"
-                        className="search-icon "
-                    />
+                <button
+                    onClick={handleClose}
+                    className="h-6 w-6 p-1 rounded-r-md border-none flex items-center justify-center text-xs font-bold text-gray-400"
+                >
+                    X
                 </button>
             </form>
 
