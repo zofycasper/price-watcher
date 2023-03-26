@@ -137,7 +137,7 @@ export default function App() {
     console.log(priceData);
 
     return (
-        <div className="app-container bg-slate-400 flex flex-col items-center ">
+        <div className="app-container bg-slate-400 flex flex-col items-center">
             <Header
                 toggleWatchList={toggleWatchList}
                 isWatchList={isWatchList}

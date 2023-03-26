@@ -34,3 +34,20 @@ nav > button {
     background-color: transparent;
     color: white;
 }
+
+::-webkit-scrollbar {
+    width: 10px; /* set the width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #ccc; /* set the color of the thumb */
+    border-radius: 10px; /* set the border radius of the thumb */
+}
+
+/* Set the position of the scrollbar to fixed */
+::-webkit-scrollbar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+}
