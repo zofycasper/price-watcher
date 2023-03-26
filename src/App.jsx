@@ -5,8 +5,11 @@ import CardHeader from "./CardHeader";
 import Card from "./Card";
 
 export default function App() {
+    // localStorage.clear();
     const [priceData, setPriceData] = useState([]);
-    const [watchList, setWatchList] = useState([]);
+    const [watchList, setWatchList] = useState(
+        JSON.parse(localStorage.getItem("watchList")) || []
+    );
     const [inputData, setInputData] = useState("");
 
     const [isWatchList, setIsWatchList] = useState(false);
@@ -18,31 +21,45 @@ export default function App() {
             .then((res) => res.json())
             .then((data) => {
                 console.log("data fetched!");
+
                 setPriceData(() => {
                     const newPriceData = data.map((item) => {
-                        return watchList.includes(item)
-                            ? {
-                                  ...item,
-                                  isFavorite: true,
-                              }
-                            : {
-                                  ...item,
-                                  isFavorite: false,
-                              };
+                        if (watchList.length === 0) {
+                            return {
+                                ...item,
+                                isFavorite: false,
+                            };
+                        } else {
+                            const updatedItem = watchList.filter((coin) => {
+                                if (coin.id === item.id) {
+                                    return {
+                                        ...item,
+                                        isFavorite: true,
+                                    };
+                                }
+                            });
+
+                            return (
+                                updatedItem.find(
+                                    (coin) => coin.isFavorite === true
+                                ) || {
+                                    ...item,
+                                    isFavorite: false,
+                                }
+                            );
+                        }
                     });
                     return newPriceData;
                 });
             });
     }, []);
 
+    useEffect(() => {
+        localStorage.setItem("watchList", JSON.stringify(watchList));
+    }, [watchList]);
+
     function toggleWatchList() {
         setIsWatchList((prev) => !prev);
-
-        // setWatchList(() => {
-        //     return priceData.filter((item) => {
-        //         return item.isFavorite;
-        //     });
-        // });
 
         console.log("watchlist clicked!");
     }
@@ -64,7 +81,24 @@ export default function App() {
             });
         });
 
-        console.log(id);
+        setWatchList((prev) => {
+            let newList = [...prev];
+            priceData.map((item) => {
+                if (item.symbol === id && item.isFavorite === false) {
+                    const newItem = {
+                        ...item,
+                        isFavorite: true,
+                    };
+
+                    newList.push(newItem);
+                } else if (item.symbol === id) {
+                    newList = prev.filter((item) => {
+                        return item.symbol !== id;
+                    });
+                }
+            });
+            return newList;
+        });
     }
 
     function handleChange(event) {
@@ -84,13 +118,7 @@ export default function App() {
     }
 
     function cardShown() {
-        return isSearchList
-            ? searchList
-            : isWatchList
-            ? priceData.filter((item) => {
-                  return item.isFavorite;
-              })
-            : priceData;
+        return isSearchList ? searchList : isWatchList ? watchList : priceData;
     }
 
     const cardElements = cardShown().map((item) => {
@@ -104,7 +132,9 @@ export default function App() {
         );
     });
 
-    console.log(searchList);
+    console.log(watchList);
+
+    console.log(priceData);
 
     return (
         <div className="app-container bg-slate-400 flex flex-col items-center ">
