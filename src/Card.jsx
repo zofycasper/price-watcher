@@ -20,7 +20,7 @@ export default function Card({
         : "./image/star-empty.svg";
 
     return (
-        <div className="flex flex-shrink-0 h-10 items-center justify-between w-full text-gray-300 text-xs font-medium border-b-[1px] border-gray-800">
+        <div className="flex flex-shrink-0 h-11 items-center justify-between w-full text-gray-300 text-xs font-medium border-b-[1px] border-gray-800">
             <div className="flex items-center gap-4 w-1/3">
                 <img
                     src={star}

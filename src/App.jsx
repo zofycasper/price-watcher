@@ -3,25 +3,26 @@ import url from "./url";
 import Header from "./Header";
 import CardHeader from "./CardHeader";
 import Card from "./Card";
+import Footer from "./Footer";
+import Loading from "react-loading";
 
 export default function App() {
-    // localStorage.clear();
     const [priceData, setPriceData] = useState([]);
     const [watchList, setWatchList] = useState(
         JSON.parse(localStorage.getItem("watchList")) || []
     );
     const [inputData, setInputData] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const [isWatchList, setIsWatchList] = useState(false);
     const [searchList, setSearchList] = useState(priceData);
     const [isSearchList, setIsSearchList] = useState(false);
 
     useEffect(() => {
+        setIsLoading(true);
         fetch(url)
             .then((res) => res.json())
             .then((data) => {
-                console.log("data fetched!");
-
                 setPriceData(() => {
                     const newPriceData = data.map((item) => {
                         if (watchList.length === 0) {
@@ -51,6 +52,7 @@ export default function App() {
                     });
                     return newPriceData;
                 });
+                setIsLoading(false);
             });
     }, []);
 
@@ -60,8 +62,6 @@ export default function App() {
 
     function toggleWatchList() {
         setIsWatchList((prev) => !prev);
-
-        console.log("watchlist clicked!");
     }
 
     function handleClose() {
@@ -103,7 +103,6 @@ export default function App() {
 
     function handleChange(event) {
         const { value } = event.target;
-        console.log(value);
         setInputData(value);
 
         value ? setIsSearchList(true) : setIsSearchList(false);
@@ -132,10 +131,6 @@ export default function App() {
         );
     });
 
-    console.log(watchList);
-
-    console.log(priceData);
-
     return (
         <div className="app-container bg-slate-400 flex flex-col items-center">
             <Header
@@ -145,9 +140,21 @@ export default function App() {
                 inputData={inputData}
                 handleClose={handleClose}
             />
-            <div className="card-container flex flex-col items-center w-full mt-12 overflow-auto pl-8 pr-10">
+            <div className="card-container flex flex-col items-center w-full mt-11 overflow-y-scroll pl-8 pr-8">
                 <CardHeader />
-                {cardElements}
+                {isLoading ? (
+                    <div className="py-32">
+                        <Loading
+                            type={"spin"}
+                            color={"#d1d5db"}
+                            height={"2rem"}
+                            width={"2rem"}
+                        />
+                    </div>
+                ) : (
+                    cardElements
+                )}
+                <Footer />
             </div>
         </div>
     );

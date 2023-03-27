@@ -24,6 +24,10 @@ nav {
     height: 100%;
 }
 
+.title {
+    color: #333333;
+}
+
 form > input,
 form > button,
 nav > button {
@@ -36,18 +40,10 @@ nav > button {
 }
 
 ::-webkit-scrollbar {
-    width: 10px; /* set the width of the scrollbar */
+    width: 12px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #ccc; /* set the color of the thumb */
-    border-radius: 10px; /* set the border radius of the thumb */
-}
-
-/* Set the position of the scrollbar to fixed */
-::-webkit-scrollbar {
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
 }

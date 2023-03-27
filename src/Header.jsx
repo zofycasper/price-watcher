@@ -12,10 +12,8 @@ export default function Header({
     }
 
     return (
-        <nav className="bg-gray-300  flex h-10 justify-between items-center px-5 text-sm fixed shadow-sm">
-            <div className="font-bold text-xs italic text-gray-700">
-                Price Watcher
-            </div>
+        <nav className="bg-gray-300  flex h-11 justify-between items-center px-5 text-sm fixed shadow-sm">
+            <div className="font-bold text-sm italic title">Price Watcher</div>
             <form
                 onSubmit={handleSubmit}
                 action="GET"
@@ -25,7 +23,7 @@ export default function Header({
                     onChange={() => handleChange(event)}
                     value={inputData}
                     placeholder="search"
-                    className="h-6 border-none rounded-l-md hover:bg-gray-600 placeholder:text-gray-500 px-2  py-1 placeholder:text-xs text-xs text-gray-300 focus:outline-none"
+                    className="h-6 border-none rounded-l-md hover:bg-gray-500 placeholder:text-gray-400 placeholder:italic caret-gray-300 px-2  py-1 placeholder:text-xs text-xs text-gray-300 focus:outline-none focus:bg-gray-600"
                 />
                 <button
                     onClick={handleClose}
@@ -37,7 +35,7 @@ export default function Header({
 
             <button
                 onClick={toggleWatchList}
-                className=" text-gray-300 italic px-3 py-1 rounded-xl text-xs font-light"
+                className=" text-[#4c4c4c] italic bg-transparent border-2 border-[#4c4c4c] px-3 py-1 rounded-xl text-xs font-medium w-[95px] transition ease-in-out hover:bg-[#4c4c4c] hover:border-solid hover:border-2 hover:border-[#4c4c4c] hover:font-bold  hover:text-gray-300"
             >
                 {isWatchList ? "Back" : "Watch list"}
             </button>
