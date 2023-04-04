@@ -53,6 +53,19 @@ export default function App() {
         localStorage.setItem("watchList", JSON.stringify(watchList));
     }, [watchList]);
 
+    useEffect(() => {
+        if (isSearchList) {
+            setSearchList(() => {
+                return priceData.filter((item) => {
+                    return (
+                        item.id.includes(inputData) ||
+                        item.symbol.includes(inputData)
+                    );
+                });
+            });
+        }
+    }, [priceData]);
+
     function toggleWatchList() {
         setIsWatchList((prev) => !prev);
         setWatchList(() => {
