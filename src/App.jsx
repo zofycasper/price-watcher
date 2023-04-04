@@ -31,23 +31,15 @@ export default function App() {
                                 isFavorite: false,
                             };
                         } else {
-                            const updatedItem = watchList.filter((coin) => {
-                                if (coin.id === item.id) {
-                                    return {
-                                        ...item,
-                                        isFavorite: true,
-                                    };
-                                }
-                            });
-
-                            return (
-                                updatedItem.find(
-                                    (coin) => coin.isFavorite === true
-                                ) || {
-                                    ...item,
-                                    isFavorite: false,
-                                }
+                            const foundItem = watchList.find(
+                                (coin) => coin.id === item.id
                             );
+                            return {
+                                ...item,
+                                isFavorite: foundItem
+                                    ? foundItem.isFavorite
+                                    : false,
+                            };
                         }
                     });
                     return newPriceData;
@@ -60,8 +52,28 @@ export default function App() {
         localStorage.setItem("watchList", JSON.stringify(watchList));
     }, [watchList]);
 
+    useEffect(() => {
+        if (isSearchList) {
+            setSearchList(() => {
+                return priceData.filter((item) => {
+                    return (
+                        item.id.includes(inputData) ||
+                        item.symbol.includes(inputData)
+                    );
+                });
+            });
+        }
+    }, [priceData]);
+
     function toggleWatchList() {
         setIsWatchList((prev) => !prev);
+        setWatchList(() => {
+            return priceData.filter((item) => {
+                if (item.isFavorite) {
+                    return item;
+                }
+            });
+        });
     }
 
     function handleClose() {

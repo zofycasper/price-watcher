@@ -28,7 +28,7 @@ export default function Footer() {
                     alt="github icon"
                 />
             </a>
-            <p className="text-xs text-gray-300 italic">Build by Casper</p>
+            <p className="text-xs text-gray-300 italic">Built by Casper</p>
             <a
                 href="https://zofycasper.com/"
                 className="text-xs text-gray-300 italic tracking-wider"

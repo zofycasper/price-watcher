@@ -11,6 +11,11 @@ export default function Header({
         event.preventDefault();
     }
 
+    function handleCombineClick() {
+        toggleWatchList();
+        handleClose();
+    }
+
     return (
         <nav className="bg-gray-300  flex h-11 justify-between items-center px-5 text-sm fixed shadow-sm">
             <div className="font-bold text-sm italic title">Price Watcher</div>
@@ -34,7 +39,7 @@ export default function Header({
             </form>
 
             <button
-                onClick={toggleWatchList}
+                onClick={handleCombineClick}
                 className=" text-[#4c4c4c] italic bg-transparent border-2 border-[#4c4c4c] px-3 py-1 rounded-xl text-xs font-medium w-[95px] transition ease-in-out hover:bg-[#4c4c4c] hover:border-solid hover:border-2 hover:border-[#4c4c4c] hover:font-bold  hover:text-gray-300"
             >
                 {isWatchList ? "Back" : "Watch list"}
