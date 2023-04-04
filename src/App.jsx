@@ -23,6 +23,7 @@ export default function App() {
         fetch(url)
             .then((res) => res.json())
             .then((data) => {
+                console.log(data);
                 setPriceData(() => {
                     const newPriceData = data.map((item) => {
                         if (watchList.length === 0) {
@@ -31,23 +32,15 @@ export default function App() {
                                 isFavorite: false,
                             };
                         } else {
-                            const updatedItem = watchList.filter((coin) => {
-                                if (coin.id === item.id) {
-                                    return {
-                                        ...item,
-                                        isFavorite: true,
-                                    };
-                                }
-                            });
-
-                            return (
-                                updatedItem.find(
-                                    (coin) => coin.isFavorite === true
-                                ) || {
-                                    ...item,
-                                    isFavorite: false,
-                                }
+                            const foundItem = watchList.find(
+                                (coin) => coin.id === item.id
                             );
+                            return {
+                                ...item,
+                                isFavorite: foundItem
+                                    ? foundItem.isFavorite
+                                    : false,
+                            };
                         }
                     });
                     return newPriceData;
@@ -62,6 +55,13 @@ export default function App() {
 
     function toggleWatchList() {
         setIsWatchList((prev) => !prev);
+        setWatchList(() => {
+            return priceData.filter((item) => {
+                if (item.isFavorite) {
+                    return item;
+                }
+            });
+        });
     }
 
     function handleClose() {
