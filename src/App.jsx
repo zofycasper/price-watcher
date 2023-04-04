@@ -23,7 +23,6 @@ export default function App() {
         fetch(url)
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 setPriceData(() => {
                     const newPriceData = data.map((item) => {
                         if (watchList.length === 0) {
